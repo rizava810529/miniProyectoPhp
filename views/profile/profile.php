@@ -25,7 +25,7 @@
     <div>
         <div class="h-100 d-flex flex-column justify-content-center align-items-center ">
             <h1 class="title">Personal Info</h1>
-            <p class="title1">Some info may be visible to other people</p>
+            <p class="title1">Basic info, like your name and photo</p>
         </div>
         <div class="card  d-flex justify-content-center align-items-center">
             <div class="card-body " style="width: 50%; height: 40%; ">
@@ -62,28 +62,16 @@
                     <div>EMAIL</div>
                     <div>xanthe.neal@gmail.com</div>
                 </div>
-                <div class="d-flex justify-content-between align-it5ems-center line p-2">
+                <div class="d-flex justify-content-between align-items-center  p-2 ">
                     <div>PASSWORD</div>
                     <div>++++++++++++++++++</div>
                 </div>
-                
+
 
 
             </div>
         </div>
 
-
-
-
-
-
-        <div class="h-100 d-flex flex-column justify-content-center align-items-center ">
-
-            <div class="">
-
-
-            </div>
-        </div>
 
 
 
@@ -93,9 +81,12 @@
 
     </div>
 
+    <div class="d-flex justify-content-between align-items-center  margin  p-2" style="width: 50%; height: 40%; ">
+        <p>created by username</p>
+        <p>devchallenges.io</p>
+    </div>
 
 
-    
 
 
 

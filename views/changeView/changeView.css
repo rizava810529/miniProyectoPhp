@@ -1,0 +1,17 @@
+
+.card-body{
+    border-radius: 15px;
+    border: 1px solid #E0E0E0
+}
+
+
+
+.card {
+    border: none; /* Elimina el borde */
+    box-shadow: none; /* Elimina el sombreado */
+    /* Otros estilos personalizados si es necesario */
+  }
+
+  .margin{
+    margin-left: 320px;
+  }
