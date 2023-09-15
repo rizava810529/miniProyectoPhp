@@ -36,3 +36,18 @@ font-weight: 600;
 line-height: normal;
 letter-spacing: -0.56px;
 }
+.margin{
+    margin-left: 320px;
+}
+.card {
+    border: none; /* Elimina el borde */
+    box-shadow: none; /* Elimina el sombreado */
+    /* Otros estilos personalizados si es necesario */
+}
+
+.line{
+    border: 1px solid #3e3b3b
+}
+.contenido{
+    margin-left: 180px;
+}

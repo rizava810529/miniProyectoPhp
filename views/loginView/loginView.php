@@ -24,7 +24,7 @@
 
     <div class="container d-flex flex-column justify-content-center align-items-center">
 
-        <div style="width: 900px; height: 200px;  " class="m-5">
+        <div style="width: 900px; height:auto;  " class="m-5">
                 <div class="container mt-5" >
                     <div class="row justify-content-center">
                         <div class="col-md-6 gap-5">
@@ -74,14 +74,14 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center texto4 gap">
                 <p>createb by  <u>username</u> </p>
+
                 <P>devChallenges.io</P>
 
             </div>
         </div>
-    </div>
-
+   
 
 
 <!-- MDB -->

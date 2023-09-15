@@ -17,7 +17,8 @@
 <body>
     <div>
         <div class="h-100 d-flex  justify-content-start align-items-center  margin">
-            <a href=""> Back</a>
+        <img src="/asset/flecha-izquierda.png" alt="" style="width: 10px; height: 10px;">  
+        <a href=""> Back</a>
         </div>
         <div class="card  d-flex justify-content-center align-items-center">
             <div class="card-body " style="width: 50%; height: 40%; ">
