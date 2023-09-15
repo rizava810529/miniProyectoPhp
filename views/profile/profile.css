@@ -1,0 +1,29 @@
+.title {
+    font-family: Noto Sans;
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 49px;
+    letter-spacing: -0.035em;
+    text-align: left;
+
+}
+
+.title1 {
+    font-family: Noto Sans;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 25px;
+    letter-spacing: -0.035em;
+    text-align: left;
+
+}
+.card-body{
+    border-radius: 15px;
+    border: 1px solid #373535;
+}
+
+.line{
+    border: 1px solid #3e3b3b;
+}
+
+
