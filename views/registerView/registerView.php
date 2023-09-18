@@ -21,7 +21,7 @@
                         <div class="card  line">
 
                             <div class="card-body">
-                                <form method="post" action="login.php">
+                                <form method="post" action="/profile/">
 
                                     <div class="d-flex align-items-center">
 
@@ -65,7 +65,7 @@
                                     </div>
 
                                     <div class=" d-flex justify-content-center align-items-center texto4">
-                                        <p>Adready a member? <a href="#">Login</a></p>
+                                        <p>Adready a member? <a href="/views/loginView/loginView.php">Login</a></p>
                                     </div>
                                 </form>
                             </div>

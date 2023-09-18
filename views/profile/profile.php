@@ -1,9 +1,52 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['usuario'])) {
+    header("Location: loginView.php");
+    exit();
+}
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "login_db";
+
+try {
+    $mysqli = new mysqli($servername, $username, $password, $dbname);
+
+    if ($mysqli->mysqliect_error) {
+        throw new Exception("Error de conexión a la base de datos: " . $mysqli->mysqliect_error);
+    }
+
+    $email = $_SESSION['usuario'];
+    $sql = "SELECT nombre, bio, phone, password FROM usuarios WHERE email = '$email'";
+    $result = $mysqli->query($sql);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $nombre = $row['nombre'];
+        $bio = $row['bio'];
+        $phone = $row['phone'];
+        $password = $row['password'];
+    } else {
+        $nombre = "Nombre no encontrado";
+        $bio = "Bio no encontrada";
+        $phone = "Teléfono no encontrado";
+    }
+
+    $mysqli->close();
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Profile</title>
         <!-- Font Awesome -->
     <link
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -36,7 +79,7 @@
                             <p>Some info may be visible to other people</p>
                         </div>
                         <div class="d-flex  align-items-center m-3">
-                            <button type="button" class="btn btn-outline-secondary"                             data-mdb-ripple-color="dark">Edit</button>
+                            <a href="changeView.php" class="btn btn-outline-secondary" data-mdb-ripple-color="dark">Edit</a>
                         </div>
                     </div>
                     <div></div>
@@ -47,24 +90,23 @@
                 </div>
                 <div class="d-flex justify-content-between align-items-center line p-2">
                     <div>NAME</div>
-                    <div>NOMBRE DE BASE DE DATOS</div>
-
+                    <div><?php echo $nombre; ?></div>
                 </div>
                 <div class="d-flex justify-content-between align-items-center line p-2">
                     <div>BIO</div>
-                    <div>I am a software developer and a big fan of devchallenges... </div>
+                    <div><?php echo $bio; ?></div>
                 </div>
                 <div class="d-flex justify-content-between align-items-center line p-2">
                     <div>PHONE</div>
-                    <div>908249274292</div>
+                    <div><?php echo $phone; ?></div>
                 </div>
                 <div class="d-flex justify-content-between align-items-center line p-2">
                     <div>EMAIL</div>
-                    <div>xanthe.neal@gmail.com</div>
+                    <div><?php echo $email; ?></div>
                 </div>
                 <div class="d-flex justify-content-between align-items-center  p-2 ">
                     <div>PASSWORD</div>
-                    <div>++++++++++++++++++</div>
+                    <div><?php echo $password; ?></div>
                 </div>
 
 
@@ -95,7 +137,7 @@
 
 
 
-        <!-- MDB -->
+    <!-- MDB -->
     <script
     type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"

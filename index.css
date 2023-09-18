@@ -1,0 +1,44 @@
+.inputDiv {
+    
+    position: relative;
+}
+.inputDiv > input {
+    
+    padding-left: 25px;
+    outline: 0;
+}
+.inputDiv > img {
+    position: absolute;
+    top: 10px;
+    
+    left: 5px;
+}
+
+
+.texto1{
+    font-family: Noto Sans;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 25px;
+    letter-spacing: -0.035em;
+    text-align: left;
+    color: #333333;
+
+}
+
+texto4{
+    color: #FFF;
+text-align: center;
+font-family: Noto Sans;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+letter-spacing: -0.56px;
+}
+.gap{
+    gap: 130px;
+}
+.margin{
+    margin-left: 500px;
+}
