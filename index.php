@@ -1,32 +1,43 @@
 <?php
-include('db_config.php'); // Incluye la configuración de la base de datos
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtiene los datos ingresados por el usuario
+    $db_host = "localhost";
+    $db_user = "root";
+    $db_pass = "";
+    $db_name = "login_db";
+
+    $conn = new mysqli($db_host, $db_user, $db_pass, $db_name);
+
+    if ($conn->connect_error) {
+        die("Error de conexión: " . $conn->connect_error);
+    }
+
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    // Evita la inyección SQL utilizando declaraciones preparadas
-    $sql = "SELECT * FROM usuarios WHERE email = ? AND password = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $email, $password);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // Verificar si el correo electrónico ya está registrado
+    $sql = "SELECT * FROM usuarios WHERE email = '$email'";
+    $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        // Las credenciales son correctas, inicia sesión
-        session_start();
-        $_SESSION["email"] = $email;
-        header("Location: user_data.php"); // Redirecciona a user_data.php en caso de éxito
-        exit();
+        // El correo electrónico ya está registrado, redirigir a login.php
+        header("Location: login.php");
+        exit(); // Terminar el script para evitar que siga ejecutándose
     } else {
-        // Las credenciales son incorrectas
-        echo "Correo electrónico o contraseña incorrectos.";
+        // Insertar el nuevo usuario en la base de datos
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT); // Hash del password
+        $insert_sql = "INSERT INTO usuarios (email, password) VALUES ('$email', '$hashed_password')";
+        if ($conn->query($insert_sql) === TRUE) {
+            echo "Usuario creado exitosamente";
+        } else {
+            echo "Error al crear el usuario: " . $conn->error;
+        }
     }
-}
 
-$conn->close();
+    $conn->close();
+}
 ?>
+
+
 
 
 
@@ -34,7 +45,7 @@ $conn->close();
 <html>
 
 <head>
-    <title>Iniciar Sesión</title>
+    <title>crear-usuario</title>
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <!-- Google Fonts -->
@@ -53,7 +64,7 @@ $conn->close();
                         <div class="card  line">
 
                             <div class="card-body">
-                                <form method="post" action="user_data.php">
+                                <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
                                     <div class="d-flex align-items-center">
 
@@ -97,7 +108,7 @@ $conn->close();
                                     </div>
 
                                     <div class=" d-flex justify-content-center align-items-center texto4">
-                                        <p>Already a member? <a href="/views/loginView/loginView.php">Login</a></p>
+                                        <p>Already a member? <a href="login.php">Login</a></p>
                                     </div>
                                 </form>
                             </div>
