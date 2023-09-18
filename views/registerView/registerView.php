@@ -65,7 +65,7 @@
                                     </div>
 
                                     <div class=" d-flex justify-content-center align-items-center texto4">
-                                        <p>Adready a member? <a href="/views/loginView/loginView.php">Login</a></p>
+                                        <p>Adready a member? <a href="../user_data.php">Login</a></p>
                                     </div>
                                 </form>
                             </div>

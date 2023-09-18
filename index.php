@@ -1,3 +1,35 @@
+<?php
+include('db_config.php'); // Incluye la configuración de la base de datos
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Obtiene los datos ingresados por el usuario
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+
+    // Evita la inyección SQL utilizando declaraciones preparadas
+    $sql = "SELECT * FROM usuarios WHERE email = ? AND password = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ss", $email, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // Las credenciales son correctas, inicia sesión
+        session_start();
+        $_SESSION["email"] = $email;
+        header("Location: user_data.php"); // Redirecciona a user_data.php en caso de éxito
+        exit();
+    } else {
+        // Las credenciales son incorrectas
+        echo "Correo electrónico o contraseña incorrectos.";
+    }
+}
+
+$conn->close();
+?>
+
+
+
 <!DOCTYPE html>
 <html>
 
@@ -21,7 +53,7 @@
                         <div class="card  line">
 
                             <div class="card-body">
-                                <form method="post" action="authenticate.php">
+                                <form method="post" action="user_data.php">
 
                                     <div class="d-flex align-items-center">
 
@@ -44,12 +76,12 @@
 
                                     <div class="form-group m-3 inputDiv ">
                                         <img src="../../asset/email.png" alt="" style="width: 20px; height: 20px; ">
-                                        <input type="text" id="usuario" name="usuario" class="form-control texto4"
+                                        <input type="email"  name="email" id="email" class="form-control texto4"
                                             placeholder="Email" required>
                                     </div>
                                     <div class="form-group m-3 inputDiv">
                                         <img src="../../asset/candado.png" alt="" style="width: 20px; height: 20px; ">
-                                        <input type="password" id="contrasena" name="contrasena" placeholder="Password"
+                                        <input type="password" name="password" id="password"  placeholder="Password"
                                             class="form-control texto4" required>
                                     </div>
                                     <div class="text-center m-3">

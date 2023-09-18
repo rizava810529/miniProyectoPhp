@@ -1,44 +1,39 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['usuario'])) {
-    header("Location: loginView.php");
+if (!isset($_SESSION["email"])) {
+    // Si el usuario no está autenticado, redirígelo a la página de inicio de sesión
+    header("Location: index.php");
     exit();
 }
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "login_db";
+// Realiza una consulta para obtener los datos del usuario
+include('db_config.php'); // Incluye la configuración de la base de datos
 
-try {
-    $mysqli = new mysqli($servername, $username, $password, $dbname);
+$email = $_SESSION["email"];
+$sql = "SELECT * FROM usuarios WHERE email = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
 
-    if ($mysqli->mysqliect_error) {
-        throw new Exception("Error de conexión a la base de datos: " . $mysqli->mysqliect_error);
-    }
-
-    $email = $_SESSION['usuario'];
-    $sql = "SELECT nombre, bio, phone, password FROM usuarios WHERE email = '$email'";
-    $result = $mysqli->query($sql);
-
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $nombre = $row['nombre'];
-        $bio = $row['bio'];
-        $phone = $row['phone'];
-        $password = $row['password'];
-    } else {
-        $nombre = "Nombre no encontrado";
-        $bio = "Bio no encontrada";
-        $phone = "Teléfono no encontrado";
-    }
-
-    $mysqli->close();
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
+if ($result->num_rows === 1) {
+    $row = $result->fetch_assoc();
+    $nombre = $row["nombre"];
+    $bio = $row["bio"];
+    $phone = $row["phone"];
+    $password = $row["password"];
+} else {
+    // No se encontró el usuario en la base de datos
+    echo "No se encontraron datos del usuario.";
+    exit();
 }
+
+$conn->close();
 ?>
+
+
+
 
 
 <!DOCTYPE html>
@@ -79,7 +74,7 @@ try {
                             <p>Some info may be visible to other people</p>
                         </div>
                         <div class="d-flex  align-items-center m-3">
-                            <a href="changeView.php" class="btn btn-outline-secondary" data-mdb-ripple-color="dark">Edit</a>
+                            <a href="modificar_usuario.php" class="btn btn-outline-secondary" data-mdb-ripple-color="dark">Edit</a>
                         </div>
                     </div>
                     <div></div>
@@ -91,22 +86,26 @@ try {
                 <div class="d-flex justify-content-between align-items-center line p-2">
                     <div>NAME</div>
                     <div><?php echo $nombre; ?></div>
+                    
                 </div>
                 <div class="d-flex justify-content-between align-items-center line p-2">
                     <div>BIO</div>
                     <div><?php echo $bio; ?></div>
+                   
                 </div>
                 <div class="d-flex justify-content-between align-items-center line p-2">
                     <div>PHONE</div>
                     <div><?php echo $phone; ?></div>
+                    
                 </div>
                 <div class="d-flex justify-content-between align-items-center line p-2">
                     <div>EMAIL</div>
                     <div><?php echo $email; ?></div>
                 </div>
-                <div class="d-flex justify-content-between align-items-center  p-2 ">
+                <div class="d-flex justify-content-between align-items-center line p-2 ">
                     <div>PASSWORD</div>
                     <div><?php echo $password; ?></div>
+                    
                 </div>
 
 
@@ -127,20 +126,3 @@ try {
         <p>created by username</p>
         <p>devchallenges.io</p>
     </div>
-
-
-
-
-
-
-
-
-
-
-    <!-- MDB -->
-    <script
-    type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"
-    ></script>
-</body>
-</html>
