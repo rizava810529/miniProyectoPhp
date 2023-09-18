@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css" rel="stylesheet" />
     <link href="loginView.css" rel="stylesheet" />
-    <link href="login.css" rel="stylesheet" />
+    <link href="index.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container d-flex flex-column justify-content-center align-items-center">
@@ -69,18 +69,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <?php if (isset($error_message)) { ?>
                                 <p><?php echo $error_message; ?></p>
                                 <?php } ?>
-                                <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                                    <label for="email">Email:</label>
-                                    <input type="email" name="email" required><br><br>
-                                    <label for="password">Contraseña:</label>
-                                    <input type="password" name="password" required><br><br>
-                                    <input type="submit" value="Login">
-                                </form>
+                                <div class="">
+                                    <form method="post" class="d-flex flex-column justify-content-center align-items-center gap-3"  action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                                        <div class="">
+                                            <img src="../../asset/email.png" alt="" style="width: 20px; height: 20px; ">
+                                            <input class="inputDiv" type="email" placeholder="Email" name="email" required>
+
+
+                                        </div>                                     
+                                        
+                                       
+                                        <div>
+                                            <img src="../../asset/candado.png" alt="" style="width: 20px; height: 20px; ">
+                                            <input type="password" placeholder="Password" name="password" required><br><br>
+
+                                        </div>
+                                        
+                                        <input type="submit" value="Login">
+                                    </form>
+
+                                </div>
+                                
                                 <div class="d-flex justify-content-center align-items-center texto4">
                                     <p>or continue with these social profiles</p>
                                 </div>
                                 <div class="col-auto">
-                                    <img src="/assets/redes.png" alt="" style="width: 100%; height: 15%; ">
+                                    <img src="/asset/redes.png" alt="" style="width: 100%; height: 15%; ">
                                 </div>
                                 <div class="d-flex justify-content-center align-items-center texto4">
                                     <p>Already a member? <a href="index.php">Register</a></p>
