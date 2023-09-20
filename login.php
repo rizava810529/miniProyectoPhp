@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div class="d-flex align-items-start"> <img src="/assets/logo.png" alt="" style="width: 20px; height: 15px; "></div>
-                                    <div class="d-flex justify-content-center align-items-center"><p>devchallenges</p></div>
+                                    <div class="d-flex justify-content-center align-items-center texto1"><h2>devchallenges</h2></div>
                                 </div>
                                 <div class="texto1">
                                     <p>Login</p>
@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <form method="post" class="d-flex flex-column justify-content-center align-items-center gap-3"  action="<?php echo $_SERVER['PHP_SELF']; ?>">
                                         <div class="">
                                             <img src="../../asset/email.png" alt="" style="width: 20px; height: 20px; ">
-                                            <input class="inputDiv" type="email" placeholder="Email" name="email" required>
+                                            <input class="inputDiv " type="email" placeholder="Email" name="email" required>
 
 
                                         </div>                                     
@@ -81,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                        
                                         <div>
                                             <img src="../../asset/candado.png" alt="" style="width: 20px; height: 20px; ">
-                                            <input type="password" placeholder="Password" name="password" required><br><br>
+                                            <input type="password" class="texto4" placeholder="Password" name="password" required><br><br>
 
                                         </div>
                                         

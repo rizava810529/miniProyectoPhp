@@ -6,8 +6,10 @@ if (!isset($_SESSION["usuario"])) {
     header("Location: login.php"); // Redirigir al usuario a la página de inicio de sesión si no ha iniciado sesión
     exit();
 }
+
 $bio = "";
 $phone = "";
+$target_dir = "uploads/";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $db_host = "localhost";
     $db_user = "root";
@@ -25,10 +27,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = $_POST["phone"];
     $email = $_SESSION["usuario"];
 
-    // Actualizar los datos del usuario en la base de datos
-    $update_sql = "UPDATE usuarios SET name = '$name', bio = '$bio', phone = '$phone' WHERE email = '$email'";
-    
-    if ($conn->query($update_sql) === TRUE) {
+    // Obtener la información del archivo de imagen
+    $nombre_imagen = $_FILES["imagen"]["name"];
+    $tipo_imagen = $_FILES["imagen"]["type"];
+    $datos_imagen = file_get_contents($_FILES["imagen"]["tmp_name"]);
+
+    // Actualizar los datos del usuario y la imagen en la base de datos
+    $update_sql = "UPDATE usuarios SET Name = ?, bio = ?, phone = ?, photo = ? WHERE email = ?";
+    $stmt = $conn->prepare($update_sql);
+    $stmt->bind_param("ssbss", $name, $bio, $phone, $datos_imagen, $email);
+
+    if ($stmt->execute()) {
         // Redirigir al usuario a dashboard.php después de guardar los cambios
         header("Location: dashboard.php");
         exit();
@@ -36,10 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Error al actualizar los datos: " . $conn->error;
     }
 
-    // Actualizar la foto del usuario si se cargó una nueva
-    // (el código de carga de foto se mantiene igual)
-    // ...
-
+    $stmt->close();
     $conn->close();
 } else {
     $db_host = "localhost";
@@ -56,8 +62,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usuario_email = $_SESSION["usuario"];
 
     // Obtener los datos del usuario de la base de datos
-    $sql = "SELECT * FROM usuarios WHERE email = '$usuario_email'";
-    $result = $conn->query($sql);
+    $sql = "SELECT * FROM usuarios WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $usuario_email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
@@ -68,12 +77,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Error: Usuario no encontrado");
     }
 
+    $stmt->close();
     $conn->close();
 }
 ?>
 
+
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Editar Usuario</title>
     <meta charset="UTF-8">
@@ -86,11 +98,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/dashboard.css">
-
-
 </head>
-<body>
 
+<body>
     <div class="d-flex flex-column justify-content-center align-items-start m-5 p-3 border">
         <h2>Editar Usuario</h2>
         <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
@@ -104,26 +114,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="text" name="phone" value="<?php echo $phone; ?>"><br><br>
 
             <label for="photo">Foto de perfil:</label>
-            <input type="file" name="photo"><br><br>
+            
+            <input type="file" name="imagen" accept="image/*" required>
+                
+            
 
-            <input type="submit" value="Guardar Cambios">
+            <input type="submit" value="Guardar Cambios Subir Imagen">
         </form>
         <p><a href="dashboard.php">Volver al Dashboard</a></p>
-        
-
-
-
     </div>
-    
 
-
-
-
-
-     <!-- MDB -->
-     <script
-        type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"
-        ></script>
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"></script>
 </body>
+
 </html>

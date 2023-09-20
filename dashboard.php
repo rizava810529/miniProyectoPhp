@@ -42,8 +42,9 @@ $conn->close();
 
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Change Info</title>
     <!-- Font Awesome -->
@@ -54,41 +55,54 @@ $conn->close();
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/dashboard.css">
 </head>
+
 <body>
     <div class="d-flex flex-column justify-content-center align-items-start m-5 p-3 border">
-        
-    <div>
+
+        <div>
             <h2>Dashboard</h2>
-        </div> 
+        </div>
         <div class="h-100  d-flex justify-content-between align-items-center">
             <p>Bienvenido</p>
-            
+
         </div>
-        <div><p>Foto: <img src="<?php echo $photo; ?>" alt="Foto del usuario"></p></div>
-        <div class="gap-5"><p>Nombre: <?php echo $name; ?></p></div>
-        <div><p>Bio: <?php echo $bio; ?></p></div>
-        <div><p>Teléfono: <?php echo $phone; ?></p></div>
-        <div><p>Email: <?php echo $email; ?></p></div>
-        
-        
+        <div>
+            <p>Foto: 
+            </p>
+            <img src="mostrar_imagen.php?usuario_id=<?php echo $row["id_usuario"]; ?>" alt="Foto del usuario" class="img-fluid w-25">
+
+
+        </div>
+        <div class="gap-5">
+            <p>Nombre: <?php echo $name; ?></p>
+        </div>
+        <div>
+            <p>Bio: <?php echo $bio; ?></p>
+        </div>
+        <div>
+            <p>Teléfono: <?php echo $phone; ?></p>
+        </div>
+        <div>
+            <p>Email: <?php echo $email; ?></p>
+        </div>
+
+
         <div class="h-100 d-flex justify-content-end align-items-center">
             <a href="editar_usuario.php" class="btn btn-primary">Editar</a>
         </div>
-        
-        
-        
-        
-        
 
-      
+
+
+
+
+
+
 
 
     </div>
-        <!-- MDB -->
-        <script
-        type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"
-        ></script>
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"></script>
 
 </body>
+
 </html>
